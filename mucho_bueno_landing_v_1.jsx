@@ -50,9 +50,9 @@ function goTo(url, eventName) {
   if (typeof window !== "undefined") window.location.href = url;
 }
 
-function LogoBadge({ compact = false }) {
-  return <div className={`rounded-[1.4rem] border-4 border-white bg-white shadow-2xl ${compact ? "p-2" : "p-3"}`}>
-    <img src={LOGO} alt="Tampico Mucho Bueno" className={`${compact ? "h-14 w-20" : "h-24 w-32"} object-contain`} />
+function LogoBadge({ compact = false, noBorder = false }) {
+  return <div className={`inline-block ${noBorder ? "" : "rounded-[1.4rem] border-4 border-white bg-white shadow-2xl"} ${compact ? "p-2" : "p-3"}`}>
+    <img src={LOGO} alt="Tampico Mucho Bueno" className={`${compact ? "h-12 w-12" : "h-24 w-24"} object-contain`} />
   </div>;
 }
 
@@ -205,5 +205,5 @@ function ContactType({ children, active, onClick }) { return <button onClick={on
 function Input({ label, placeholder }) { return <label><span className="text-sm font-black text-blue-950">{label}</span><input className="mt-2 w-full rounded-2xl border border-cyan-200 p-4 font-semibold outline-none focus:ring-4 focus:ring-cyan-100" placeholder={placeholder} /></label>; }
 
 function Footer() {
-  return <footer className="bg-blue-950 text-white"><div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_1fr_1fr]"><div className="flex gap-4"><LogoBadge compact /><div><h3 className="text-xl font-black">{BRAND.name}</h3><p className="mt-1 text-sm font-semibold text-cyan-100">{BRAND.edition}</p><p className="mt-1 text-sm font-semibold text-cyan-100">{BRAND.dates}</p></div></div><div><h4 className="font-black">Links</h4><div className="mt-3 flex flex-wrap gap-2"><button onClick={() => goTo(LIVE_SCORING_URL, "click_live_scoring_footer")} className="rounded-xl bg-white px-3 py-2 text-xs font-black text-blue-950">📱 Live Scoring</button><a href={INSTAGRAM_URL} className="rounded-xl bg-white/10 px-3 py-2 text-xs font-black text-white">Instagram</a><a href="#contacto" className="rounded-xl bg-white/10 px-3 py-2 text-xs font-black text-white">Contacto</a></div></div><div><h4 className="font-black">Acceso privado</h4><p className="mt-2 text-sm font-semibold text-cyan-100">El público consulta resultados sin contraseña. Juez y comité acceden al panel administrativo desde una ruta privada.</p><a href="/admin" className="mt-3 inline-flex rounded-xl bg-white/10 px-3 py-2 text-xs font-black text-white">⚖️ Acceso juez / comité</a></div></div></footer>;
+  return <footer className="bg-blue-950 text-white"><div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_1fr_1fr]"><div className="flex items-center gap-4"><LogoBadge compact /><div><h3 className="text-xl font-black">{BRAND.name}</h3><p className="mt-1 text-sm font-semibold text-cyan-100">{BRAND.edition}</p><p className="mt-1 text-sm font-semibold text-cyan-100">{BRAND.dates}</p></div></div><div><h4 className="font-black">Links</h4><div className="mt-3 flex flex-wrap gap-2"><button onClick={() => goTo(LIVE_SCORING_URL, "click_live_scoring_footer")} className="rounded-xl bg-white px-3 py-2 text-xs font-black text-blue-950">📱 Live Scoring</button><a href={INSTAGRAM_URL} className="rounded-xl bg-white/10 px-3 py-2 text-xs font-black text-white">Instagram</a><a href="#contacto" className="rounded-xl bg-white/10 px-3 py-2 text-xs font-black text-white">Contacto</a></div></div><div><h4 className="font-black">Acceso privado</h4><p className="mt-2 text-sm font-semibold text-cyan-100">El público consulta resultados sin contraseña. Juez y comité acceden al panel administrativo desde una ruta privada.</p><a href="/admin" className="mt-3 inline-flex rounded-xl bg-white/10 px-3 py-2 text-xs font-black text-white">⚖️ Acceso juez / comité</a></div></div></footer>;
 }
