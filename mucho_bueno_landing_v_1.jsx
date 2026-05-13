@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from "react";
 
-// Mucho Bueno Landing · V2 Visual corregida
-// Esta versión evita SVG/data-uri pesados para que la vista previa cargue bien.
-// Las imágenes son placeholders visuales hechos con CSS; después se sustituyen por fotos reales.
+// Mucho Bueno Landing · V3 Completa (Actualizada desde v2 con logo de v1)
+// Sitio público/institucional separado del sistema Live Scoring.
+// Enfoque: landing visual para validación con cliente, con historia del torneo,
+// ganadores anteriores, patrocinadores, galería y CTA principal al Live Scoring.
 
 const LOGO = "/logo.png";
 
@@ -36,6 +37,40 @@ const categories = [
   { emoji: "🐟", title: "Marlín Azul Capturado", text: "Categoría principal en báscula. Mínimo 99 pulgadas y ranking por mayor peso." },
   { emoji: "🎣", title: "Catch & Release", text: "Marlín Azul, Marlín Blanco y Pez Vela. Puntuación por especie y bono por tag." },
   { emoji: "🌊", title: "Especies Varias", text: "Atún, Dorado y Wahoo en una sola tabla. Gana el ejemplar más pesado." },
+];
+
+const historyStats = [
+  { emoji: "🛥️", value: "13ª", label: "edición 2026" },
+  { emoji: "🌊", value: "Golfo", label: "pesca deportiva regional" },
+  { emoji: "🤝", value: "20+", label: "patrocinadores y aliados" },
+  { emoji: "🏆", value: "3", label: "categorías oficiales" },
+];
+
+const pastWinners = [
+  {
+    year: "2025",
+    team: "Equipo campeón por confirmar",
+    category: "Marlín Azul Capturado",
+    prize: "Bolsa General + Pollas",
+    metric: "Peso oficial por confirmar",
+    imageType: "marlin",
+  },
+  {
+    year: "2024",
+    team: "Ganador Catch & Release",
+    category: "Catch & Release",
+    prize: "Premio C&R",
+    metric: "Puntos por confirmar",
+    imageType: "yacht",
+  },
+  {
+    year: "2023",
+    team: "Ganador Especies Varias",
+    category: "Atún · Dorado · Wahoo",
+    prize: "Premio categoría",
+    metric: "Peso por confirmar",
+    imageType: "tampico",
+  },
 ];
 
 function trackEvent(name) {
@@ -117,7 +152,7 @@ function SponsorGroup({ title, items, large, compact }) {
   </div>;
 }
 
-export default function MuchoBuenoLandingVisualV2() {
+export default function MuchoBuenoLandingV3() {
   const [contactType, setContactType] = useState("participar");
   const sponsorGroups = useMemo(() => ({
     principales: sponsors.filter((s) => s.tier === "principal"),
@@ -129,10 +164,10 @@ export default function MuchoBuenoLandingVisualV2() {
     <Header />
     <Hero />
     <main>
-      <LivePreview />
-      <About />
+      <History />
       <Program />
       <Categories />
+      <PastWinners />
       <Sponsors sponsorGroups={sponsorGroups} />
       <Media />
       <Contact contactType={contactType} setContactType={setContactType} />
@@ -142,11 +177,11 @@ export default function MuchoBuenoLandingVisualV2() {
 }
 
 function Header() {
-  const links = [["Torneo", "#torneo"], ["Categorías", "#categorias"], ["Patrocinadores", "#patrocinadores"], ["Galería", "#galeria"], ["Contacto", "#contacto"]];
+  const links = [["Historia", "#historia"], ["Categorías", "#categorias"], ["Ganadores", "#ganadores"], ["Patrocinadores", "#patrocinadores"], ["Galería", "#galeria"], ["Contacto", "#contacto"]];
   return <header className="sticky top-0 z-40 border-b border-cyan-100 bg-white/95 shadow-sm backdrop-blur">
     <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
       <div className="flex items-center gap-3"><LogoBadge compact /><div className="hidden sm:block"><p className="text-sm font-black leading-none text-blue-950">{BRAND.name}</p><p className="text-xs font-bold text-cyan-800">{BRAND.edition}</p></div></div>
-      <nav className="hidden items-center gap-5 lg:flex">{links.map(([label, href]) => <a key={label} href={href} className="text-sm font-black text-blue-950 hover:text-cyan-700">{label}</a>)}</nav>
+      <nav className="hidden items-center gap-5 xl:flex">{links.map(([label, href]) => <a key={label} href={href} className="text-sm font-black text-blue-950 hover:text-cyan-700">{label}</a>)}</nav>
       <button onClick={() => goTo(LIVE_SCORING_URL, "click_live_scoring_header")} className="rounded-2xl bg-blue-950 px-4 py-3 text-sm font-black text-white shadow hover:bg-blue-900">📱 Live Scoring</button>
     </div>
   </header>;
@@ -172,22 +207,25 @@ function HeroStat({ emoji, label, value }) {
   return <div className="rounded-3xl bg-white/15 p-4 ring-1 ring-white/20"><p className="text-2xl">{emoji}</p><p className="mt-2 text-xs font-black uppercase tracking-widest text-cyan-100">{label}</p><p className="mt-1 text-lg font-black text-white">{value}</p></div>;
 }
 
-function LivePreview() {
-  return <section className="mx-auto -mt-10 max-w-7xl px-4 sm:px-6"><Card className="relative z-10 overflow-hidden border-cyan-100"><div className="grid gap-0 lg:grid-cols-[1fr_.8fr]"><div className="p-7 sm:p-9"><Chip>📱 Plataforma pública</Chip><h2 className="mt-4 text-4xl font-black tracking-tight text-blue-950">Sigue el torneo en vivo desde cualquier lugar.</h2><p className="mt-4 max-w-2xl text-base font-semibold leading-8 text-slate-700">Consulta capturas recientes, líderes por categoría, equipos, estatus preliminares y resultados oficiales. La liga será pública para que participantes, familias, patrocinadores y aficionados puedan seguir el torneo en tiempo real.</p><div className="mt-6 flex flex-col gap-3 sm:flex-row"><button onClick={() => goTo(LIVE_SCORING_URL, "click_live_scoring_preview")} className="rounded-2xl bg-blue-950 px-6 py-4 font-black text-white shadow-lg hover:bg-blue-900">📱 Entrar al Live Scoring</button><button onClick={() => trackEvent("click_share_link") } className="rounded-2xl bg-cyan-100 px-6 py-4 font-black text-blue-950 hover:bg-cyan-200">📤 Compartir liga</button></div></div><div className="bg-blue-950 p-7 text-white sm:p-9"><p className="text-xs font-black uppercase tracking-[0.22em] text-cyan-200">Preview Live</p><div className="mt-5 grid gap-3"><PreviewRow icon="🐟" title="Marlín Azul Capturado" value="Tabla General" /><PreviewRow icon="🎣" title="Catch & Release" value="Puntos + tag" /><PreviewRow icon="🌊" title="Especies Varias" value="Atún · Dorado · Wahoo" /><PreviewRow icon="💰" title="Pollas y Bolsa" value="Montos visibles" /></div></div></div></Card></section>;
-}
-function PreviewRow({ icon, title, value }) { return <div className="flex items-center justify-between rounded-2xl bg-white/15 p-4"><div className="flex items-center gap-3"><span className="text-3xl">{icon}</span><p className="font-black">{title}</p></div><p className="text-sm font-black text-cyan-200">{value}</p></div>; }
-
-function About() {
-  return <section id="torneo" className="mx-auto max-w-7xl px-4 py-16 sm:px-6"><div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center"><SectionHeader kicker="🌊 Más que un torneo de pesca" title="Una tradición náutica de Tampico." text="Mucho Bueno reúne cada año a pescadores, familias, embarcaciones y patrocinadores en una experiencia que combina competencia deportiva, convivencia y comunidad. La nueva plataforma pública permitirá que el torneo se siga en vivo y que su alcance regional pueda medirse mejor." /><div className="grid grid-cols-2 gap-3"><ArtPanel large type="yacht" title="Embarcaciones" subtitle="Espacio para foto real." /><ArtPanel type="marlin" title="Capturas" subtitle="Ambiente de torneo." /><ArtPanel type="tampico" title="Premiación" subtitle="Cierre del evento." /></div></div></section>;
+function History() {
+  return <section id="historia" className="bg-white py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6"><div className="grid gap-8 lg:grid-cols-[1fr_.9fr] lg:items-center"><div><SectionHeader kicker="📖 Historia" title="Un torneo con identidad, comunidad y mar." text="Tampico Mucho Bueno nace alrededor de la pesca deportiva, la convivencia náutica y la tradición familiar del sur de Tamaulipas. Con cada edición, el torneo ha consolidado una community de embarcaciones, capitanes, patrocinadores y familias que viven la competencia dentro y fuera del agua." /><div className="mt-6 rounded-[2rem] bg-cyan-50 p-6"><p className="text-lg font-black leading-8 text-blue-950">Para la versión final, esta sección puede enriquecerse con el año de fundación, anécdotas históricas, récords de capturas, fotos de primeras ediciones y testimonios del comité o participantes.</p></div></div><div className="grid gap-3 sm:grid-cols-2">{historyStats.map((s) => <div key={s.label} className="rounded-[2rem] bg-blue-950 p-6 text-white shadow-lg"><p className="text-4xl">{s.emoji}</p><p className="mt-4 text-4xl font-black text-cyan-300">{s.value}</p><p className="mt-1 text-sm font-black uppercase tracking-widest text-cyan-100">{s.label}</p></div>)}</div></div></div></section>;
 }
 
 function Program() {
   const items = [["🍽️", "Cena de acercamiento", "Cierre de inscripciones, pollas y presentación oficial."], ["🎣", "Días de pesca", "Actividad oficial durante las fechas del torneo."], ["⚖️", "Báscula y validación", "Capturas, videos y resultados sujetos a juez/comité."], ["🏆", "Premiación", "Entrega de resultados finales y reconocimiento a ganadores."]];
-  return <section className="bg-white py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6"><SectionHeader center kicker="📅 Programa 2026" title={BRAND.dates} text="Una estructura clara para participantes, patrocinadores e invitados." /><div className="mt-10 grid gap-4 md:grid-cols-4">{items.map(([emoji, title, text]) => <Card key={title} className="p-5"><p className="text-4xl">{emoji}</p><h3 className="mt-4 text-xl font-black text-blue-950">{title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-slate-700">{text}</p></Card>)}</div></div></section>;
+  return <section className="bg-[#eaf8fb] py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6"><SectionHeader center kicker="📅 Programa 2026" title={BRAND.dates} text="Una estructura clara para participantes, patrocinadores e invitados." /><div className="mt-10 grid gap-4 md:grid-cols-4">{items.map(([emoji, title, text]) => <Card key={title} className="p-5"><p className="text-4xl">{emoji}</p><h3 className="mt-4 text-xl font-black text-blue-950">{title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-slate-700">{text}</p></Card>)}</div></div></section>;
 }
 
 function Categories() {
   return <section id="categorias" className="mx-auto max-w-7xl px-4 py-16 sm:px-6"><SectionHeader center kicker="🏆 Categorías" title="Tres formas de competir. Una sola experiencia." text="La landing resume las categorías; el reglamento completo puede descargarse o consultarse en una página independiente." /><div className="mt-10 grid gap-5 md:grid-cols-3">{categories.map((cat) => <Card key={cat.title} className="p-7"><p className="text-5xl">{cat.emoji}</p><h3 className="mt-5 text-2xl font-black text-blue-950">{cat.title}</h3><p className="mt-3 text-sm font-semibold leading-7 text-slate-700">{cat.text}</p></Card>)}</div></section>;
+}
+
+function PastWinners() {
+  return <section id="ganadores" className="bg-blue-950 py-16 text-white"><div className="mx-auto max-w-7xl px-4 sm:px-6"><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><SectionHeader dark kicker="🏆 Ganadores anteriores" title="La historia también se presume." text="Una sección para mostrar equipos ganadores, premios, capturas memorables y momentos de ediciones anteriores. Los datos actuales son placeholders para sustituir con información real del comité." /><button onClick={() => goTo(LIVE_SCORING_URL, "click_historico_live")} className="rounded-2xl bg-cyan-300 px-6 py-4 font-black text-blue-950 shadow-lg hover:bg-cyan-200">📱 Ver resultados 2026</button></div><div className="mt-10 grid gap-5 lg:grid-cols-3">{pastWinners.map((w) => <WinnerCard key={w.year} winner={w} />)}</div><div className="mt-8 rounded-[2rem] border border-white/20 bg-white/10 p-6"><p className="text-sm font-black uppercase tracking-[0.22em] text-cyan-200">📸 Para versión final</p><p className="mt-3 text-lg font-semibold leading-8 text-cyan-50">Aquí conviene agregar fotos reales de los ganadores con su equipo, premiación, trofeos, cheques simbólicos, capturas y logos de patrocinadores destacados de cada edición.</p></div></div></section>;
+}
+
+function WinnerCard({ winner }) {
+  return <div className="overflow-hidden rounded-[2rem] bg-white text-blue-950 shadow-xl"><ArtPanel type={winner.imageType} title={winner.year} subtitle="Foto real del ganador / premio" /><div className="p-6"><Chip variant="gold">{winner.category}</Chip><h3 className="mt-4 text-2xl font-black">{winner.team}</h3><p className="mt-2 text-sm font-bold text-slate-700">{winner.metric}</p><div className="mt-4 rounded-2xl bg-cyan-50 p-4"><p className="text-xs font-black uppercase tracking-widest text-cyan-800">Premio</p><p className="mt-1 text-lg font-black">{winner.prize}</p></div></div></div>;
 }
 
 function Sponsors({ sponsorGroups }) {
@@ -199,7 +237,7 @@ function Media() {
 }
 
 function Contact({ contactType, setContactType }) {
-  return <section id="contacto" className="bg-[#eaf8fb] py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6"><SectionHeader center kicker="📬 Contacto" title="Participa o patrocina Mucho Bueno." text="Formulario visual para centralizar solicitudes de participantes, patrocinadores y medios. En V1 puede mandar a WhatsApp o correo; en fase posterior puede guardar leads en base de datos." /><Card className="mx-auto mt-10 max-w-4xl overflow-hidden"><div className="grid lg:grid-cols-[.8fr_1.2fr]"><div className="bg-blue-950 p-7 text-white"><LogoBadge compact /><h3 className="mt-5 text-3xl font-black">Contacto oficial</h3><p className="mt-3 text-sm font-semibold leading-7 text-cyan-50">Selecciona el motivo y deja tus datos. El comité podrá responder por WhatsApp o correo.</p><div className="mt-6 space-y-2"><ContactType active={contactType === "participar"} onClick={() => setContactType("participar")}>🚤 Quiero participar</ContactType><ContactType active={contactType === "patrocinar"} onClick={() => setContactType("patrocinar")}>🤝 Quiero patrocinar</ContactType><ContactType active={contactType === "general"} onClick={() => setContactType("general")}>💬 Información general</ContactType></div></div><div className="p-7"><div className="grid gap-4 sm:grid-cols-2"><Input label="Nombre" placeholder="Tu nombre" /><Input label="Teléfono / WhatsApp" placeholder="833..." /><Input label="Correo" placeholder="correo@empresa.com" /><Input label={contactType === "patrocinar" ? "Empresa / marca" : "Embarcación"} placeholder={contactType === "patrocinar" ? "Nombre de empresa" : "Nombre de embarcación"} /><label className="sm:col-span-2"><span className="text-sm font-black text-blue-950">Mensaje</span><textarea className="mt-2 h-32 w-full rounded-2xl border border-cyan-200 p-4 font-semibold outline-none focus:ring-4 focus:ring-cyan-100" placeholder="Cuéntanos cómo podemos ayudarte..." /></label></div><div className="mt-5 flex flex-col gap-3 sm:flex-row"><button onClick={() => goTo(contactType === "patrocinar" ? SPONSOR_WHATSAPP : CONTACT_WHATSAPP, `click_contact_${contactType}`)} className="rounded-2xl bg-blue-950 px-6 py-4 font-black text-white shadow-lg hover:bg-blue-900">Enviar por WhatsApp</button><button onClick={() => trackEvent("submit_contact_form_demo")} className="rounded-2xl bg-cyan-100 px-6 py-4 font-black text-blue-950 hover:bg-cyan-200">Guardar solicitud</button></div><p className="mt-3 text-xs font-semibold text-slate-500">Nota: en esta demo los botones pueden conectarse a WhatsApp, correo o backend según la implementación final.</p></div></div></Card></div></section>;
+  return <section id="contacto" className="bg-white py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6"><SectionHeader center kicker="📬 Contacto" title="Participa o patrocina Mucho Bueno." text="Formulario visual para centralizar solicitudes de participantes, patrocinadores y medios. En V1 puede mandar a WhatsApp o correo; en fase posterior puede guardar leads en base de datos." /><Card className="mx-auto mt-10 max-w-4xl overflow-hidden"><div className="grid lg:grid-cols-[.8fr_1.2fr]"><div className="bg-blue-950 p-7 text-white"><LogoBadge compact /><h3 className="mt-5 text-3xl font-black">Contacto oficial</h3><p className="mt-3 text-sm font-semibold leading-7 text-cyan-50">Selecciona el motivo y deja tus datos. El comité podrá responder por WhatsApp o correo.</p><div className="mt-6 space-y-2"><ContactType active={contactType === "participar"} onClick={() => setContactType("participar")}>🚤 Quiero participar</ContactType><ContactType active={contactType === "patrocinar"} onClick={() => setContactType("patrocinar")}>🤝 Quiero patrocinar</ContactType><ContactType active={contactType === "general"} onClick={() => setContactType("general")}>💬 Información general</ContactType></div></div><div className="p-7"><div className="grid gap-4 sm:grid-cols-2"><Input label="Nombre" placeholder="Tu nombre" /><Input label="Teléfono / WhatsApp" placeholder="833..." /><Input label="Correo" placeholder="correo@empresa.com" /><Input label={contactType === "patrocinar" ? "Empresa / marca" : "Embarcación"} placeholder={contactType === "patrocinar" ? "Nombre de empresa" : "Nombre de embarcación"} /><label className="sm:col-span-2"><span className="text-sm font-black text-blue-950">Mensaje</span><textarea className="mt-2 h-32 w-full rounded-2xl border border-cyan-200 p-4 font-semibold outline-none focus:ring-4 focus:ring-cyan-100" placeholder="Cuéntanos cómo podemos ayudarte..." /></label></div><div className="mt-5 flex flex-col gap-3 sm:flex-row"><button onClick={() => goTo(contactType === "patrocinar" ? SPONSOR_WHATSAPP : CONTACT_WHATSAPP, `click_contact_${contactType}`)} className="rounded-2xl bg-blue-950 px-6 py-4 font-black text-white shadow-lg hover:bg-blue-900">Enviar por WhatsApp</button><button onClick={() => trackEvent("submit_contact_form_demo")} className="rounded-2xl bg-cyan-100 px-6 py-4 font-black text-blue-950 hover:bg-cyan-200">Guardar solicitud</button></div><p className="mt-3 text-xs font-semibold text-slate-500">Nota: en esta demo los botones pueden conectarse a WhatsApp, correo o backend según la implementación final.</p></div></div></Card></div></section>;
 }
 function ContactType({ children, active, onClick }) { return <button onClick={onClick} className={`w-full rounded-2xl px-4 py-3 text-left text-sm font-black transition ${active ? "bg-cyan-300 text-blue-950" : "bg-white/10 text-white hover:bg-white/20"}`}>{children}</button>; }
 function Input({ label, placeholder }) { return <label><span className="text-sm font-black text-blue-950">{label}</span><input className="mt-2 w-full rounded-2xl border border-cyan-200 p-4 font-semibold outline-none focus:ring-4 focus:ring-cyan-100" placeholder={placeholder} /></label>; }

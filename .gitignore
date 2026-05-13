@@ -29,6 +29,26 @@ yarn-error.log*
 *.swp
 *.swo
 *~
+.agent/
+.claude/
+.gemini/
+.antigravity/
+.cursor/
+.codeium/
+.github/
+.gitignore
+.code/
+.kiro/
+.opencode/
+.cursor/
+.codex/
+.continue/
+.codebuddy/
+.qoder/
+.roo/
+.trae/
+.windsurf/
+
 
 # OS
 Thumbs.db
