@@ -1,6 +1,7 @@
 {
   "name": "muchobueno-landing",
   "version": "1.0.0",
+  "type": "module",
   "description": "Landing page para Torneo Internacional de Marlín Mucho Bueno",
   "private": true,
   "scripts": {
