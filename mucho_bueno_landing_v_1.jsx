@@ -36,9 +36,9 @@ const sponsors = [
 ];
 
 const categories = [
-  { emoji: "⚖️", title: "Marlín a Báscula", text: "El trofeo definitivo. Mínimo 99 pulgadas. El peso más alto gana. El rey del torneo." },
-  { emoji: "🎣", title: "Captura y Libertad", text: "El arte del Marlín Azul, Blanco y Pez Vela. Puntos por especie + bono por tag. Suelta y gana." },
-  { emoji: "🐟", title: "Caza Múltiple", text: "Dorado, Atún y Wahoo. Un solo campeón. La captura más pesada se lleva todo." },
+  { emoji: "⚖️", title: "Marlín Azul Capturado", text: "El trofeo definitivo. Mínimo 99 pulgadas. El peso más alto gana. El rey del torneo." },
+  { emoji: "🎣", title: "Catch & Release", text: "El arte del Marlín Azul, Blanco y Pez Vela. Puntos por especie + bono por tag. Suelta y gana." },
+  { emoji: "🐟", title: "Especies Varias", text: "Dorado, Atún y Wahoo. Un solo campeón. La captura más pesada se lleva todo." },
 ];
 
 const historyStats = [
@@ -52,7 +52,7 @@ const pastWinners = [
   {
     year: "2025",
     team: "Campeón por confirmar",
-    category: "Marlín a Báscula",
+    category: "Marlín Azul Capturado",
     prize: "Bolsa General + Pollas",
     metric: "El trofeo más buscado",
     imageType: "marlin",
@@ -60,7 +60,7 @@ const pastWinners = [
   {
     year: "2024",
     team: "Maestro del Release",
-    category: "Captura y Libertad",
+    category: "Catch & Release",
     prize: "Premio C&R",
     metric: "Puntos por capturas",
     imageType: "yacht",
@@ -68,7 +68,7 @@ const pastWinners = [
   {
     year: "2023",
     team: "Cazador Múltiple",
-    category: "Caza Múltiple",
+    category: "Especies Varias",
     prize: "Premio Especies",
     metric: "Peso total acumulado",
     imageType: "tampico",
@@ -87,9 +87,9 @@ function goTo(url, eventName) {
   if (typeof window !== "undefined") window.location.href = url;
 }
 
-function LogoBadge({ compact = false, noBorder = false }) {
-  return <div className={`inline-block ${noBorder ? "" : "rounded-[1.4rem] border-4 border-white bg-white shadow-[0_25px_80px_-15px_rgba(0,0,0,0.5)]"} ${compact ? "p-2" : "p-3"}`}>
-    <img src={LOGO} alt="Tampico Mucho Bueno" className={`${compact ? "h-[82px] w-[82px]" : "h-[288px] w-[288px]"} object-contain drop-shadow-xl`} />
+function LogoBadge({ compact = false, noBorder = false, className = "" }) {
+  return <div className={`inline-block flex-shrink-0 ${noBorder ? "" : "rounded-[1.4rem] border-4 border-white bg-white shadow-[0_25px_80px_-15px_rgba(0,0,0,0.5)]"} ${compact ? "p-2" : "p-3"} ${className}`}>
+    <img src={LOGO} alt="Tampico Mucho Bueno" className={`${compact ? "h-[82px] w-[82px]" : "h-[150px] w-[150px]"} object-contain drop-shadow-xl`} />
   </div>;
 }
 
@@ -110,7 +110,7 @@ function CTAButton({ children, onClick, primary = false }) {
 function SectionHeader({ kicker, title, text, center = false, dark = false }) {
   return <div className={`${center ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}`}>
     <p className={`text-xs font-black uppercase tracking-[0.22em] ${dark ? "text-cyan-200" : "text-cyan-800"}`}>{kicker}</p>
-    <h2 className={`mt-2 text-3xl font-black tracking-tight sm:text-5xl ${dark ? "text-white" : "text-blue-950"}`}>{title}</h2>
+    <h2 className={`mt-2 text-3xl font-black tracking-tight sm:text-5xl uppercase ${dark ? "text-white" : "text-blue-950"}`}>{title}</h2>
     {text && <p className={`mt-4 text-base font-semibold leading-8 ${dark ? "text-cyan-50" : "text-slate-700"}`}>{text}</p>}
   </div>;
 }
@@ -125,10 +125,10 @@ function ArtPanel({ type = "marlin", title, subtitle, large = false, image }) {
   const bg = type === "marlin"
     ? "from-blue-950 via-cyan-800 to-cyan-300"
     : type === "yacht"
-    ? "from-slate-950 via-blue-900 to-sky-300"
-    : type === "tampico"
-    ? "from-orange-300 via-cyan-700 to-blue-950"
-    : "from-blue-950 via-sky-800 to-cyan-400";
+      ? "from-slate-950 via-blue-900 to-sky-300"
+      : type === "tampico"
+        ? "from-orange-300 via-cyan-700 to-blue-950"
+        : "from-blue-950 via-sky-800 to-cyan-400";
 
   if (image) {
     const isVideo = image.endsWith(".mp4");
@@ -196,7 +196,7 @@ export default function MuchoBuenoLandingV3() {
 }
 
 function Header() {
-  const links = [["Historia", "#historia"], ["Categorías", "#categorias"], ["Ganadores", "#ganadores"], ["Patrocinadores", "#patrocinadores"], ["Galería", "#galeria"], ["Contacto", "#contacto"]];
+  const links = [["Historia", "#historia"], ["Categorías", "#categorias"], ["Ganadores", "#ganadores"], ["Patrocinadores", "#patrocinadores"], ["Galería", "#galeria"]];
   return <header className="sticky top-0 z-40 border-b border-cyan-100 bg-white/95 shadow-sm backdrop-blur">
     <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
       <div className="flex items-center gap-3"><LogoBadge compact /><div className="hidden sm:block"><p className="text-sm font-black leading-none text-blue-950">{BRAND.name}</p><p className="text-xs font-bold text-cyan-800">{BRAND.edition}</p></div></div>
@@ -212,12 +212,12 @@ function Hero() {
     <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "30px 30px" }} />
     <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.02fr_.98fr] lg:py-24">
       <div>
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-center"><LogoBadge /><div><Chip variant="dark">🎣 Convocatoria oficial</Chip><h1 className="mt-4 text-5xl font-black leading-none tracking-tight sm:text-7xl">{BRAND.name}</h1><p className="mt-3 text-xl font-black text-cyan-100">{BRAND.edition}</p><p className="mt-1 text-base font-bold text-cyan-50">⚓ {BRAND.venue} · {BRAND.city}</p></div></div>
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center"><div className="hidden sm:block flex-shrink-0"><LogoBadge /></div><div><h1 className="mt-4 text-4xl font-black leading-none tracking-tight sm:text-5xl uppercase">{BRAND.edition}</h1><p className="mt-3 text-xl font-black text-cyan-100">{BRAND.name}</p><p className="mt-1 text-base font-bold text-cyan-50">⚓ {BRAND.venue} · {BRAND.city}</p></div></div>
         <p className="mt-7 max-w-3xl text-lg font-semibold leading-8 text-cyan-50">{BRAND.tagline}. Una experiencia deportiva donde la emoción del strike, la adrenalina del offshore y la tradición de los grandes pescadores se encuentran cada año.</p>
-        <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><CTAButton primary onClick={() => goTo(CONTACT_WHATSAPP, "click_participar_hero")}>🎣 ¡Lanza tu anzuelo! Inscribirme</CTAButton><CTAButton onClick={() => goTo(LIVE_SCORING_URL, "click_live_scoring_hero")}>📡 📱 Live Scoring</CTAButton><CTAButton onClick={() => goTo(SPONSOR_WHATSAPP, "click_patrocinar_hero")}>⚓ Apoyar la flota</CTAButton></div>
+        <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><CTAButton primary onClick={() => goTo(LIVE_SCORING_URL, "click_live_scoring_hero")}>📡 📱 Live Scoring</CTAButton></div>
         <div className="mt-7 grid gap-3 sm:grid-cols-3"><HeroStat emoji="📅" label="Fechas" value={BRAND.dates} /><HeroStat emoji="🏆" label="Categorías" value="3 principales" /><HeroStat emoji="📡" label="Resultados" value="En vivo" /></div>
       </div>
-      <div className="grid gap-4"><ArtPanel large type="marlin" title="La caza del Marlín Azul" subtitle="El trofeo definitivo te espera en aguas del Golfo." image="/photo4.jpg" /><div className="grid gap-4 sm:grid-cols-2"><ArtPanel type="yacht" title="Embarcaciones en acción" subtitle="Zarpada desde el Club de Yates Tampico." image="/photo5.jpg" /><ArtPanel type="tampico" title="La mejor caza" subtitle="Donde los grandes peces se encuentran." image="/photo6.jpg" /></div></div>
+      <div className="grid gap-4"><ArtPanel large type="marlin" title="La caza del Marlín Azul" subtitle="El trofeo definitivo te espera en aguas del Golfo." image="/marlin_azul.jpg" /><div className="grid gap-4 sm:grid-cols-2"><ArtPanel type="yacht" title="Embarcaciones en acción" subtitle="Zarpada desde el Club de Yates Tampico." image="/photo5.jpg" /><ArtPanel type="tampico" title="La mejor caza" subtitle="Donde los grandes peces se encuentran." image="/photo6.jpg" /></div></div>
     </div>
   </section>;
 }
@@ -227,7 +227,7 @@ function HeroStat({ emoji, label, value }) {
 }
 
 function History() {
-  return <section id="historia" className="bg-white py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6"><div className="grid gap-8 lg:grid-cols-[1fr_.9fr] lg:items-center"><div><SectionHeader kicker="📖 Historia" title="Un torneo con identidad, comunidad y mar." text="Tampico Mucho Bueno nace alrededor de la pesca deportiva, la convivencia náutica y la tradición familiar del sur de Tamaulipas. Con cada edición, el torneo ha consolidado una community de embarcaciones, capitanes, patrocinadores y familias que viven la competencia dentro y fuera del agua." /></div><div className="grid gap-3 sm:grid-cols-2">{historyStats.map((s) => <div key={s.label} className="rounded-[2rem] bg-blue-950 p-6 text-white shadow-lg"><p className="text-4xl">{s.emoji}</p><p className="mt-4 text-4xl font-black text-cyan-300">{s.value}</p><p className="mt-1 text-sm font-black uppercase tracking-widest text-cyan-100">{s.label}</p></div>)}</div></div></div></section>;
+  return <section id="historia" className="bg-white py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6"><div className="grid gap-8 lg:grid-cols-[1fr_.9fr] lg:items-center"><div><SectionHeader kicker="📖 Historia" title="Un torneo con identidad, comunidad y mar." text="Tampico Mucho Bueno nace alrededor de la pesca deportiva, la convivencia náutica y la tradición familiar del sur de Tamaulipas. Con cada edición, el torneo ha consolidado una comunidad de embarcaciones, capitanes, patrocinadores y familias que viven la competencia dentro y fuera del agua." /></div><div className="grid gap-3 sm:grid-cols-2">{historyStats.map((s) => <div key={s.label} className="rounded-[2rem] bg-blue-950 p-6 text-white shadow-lg"><p className="text-4xl">{s.emoji}</p><p className="mt-4 text-4xl font-black text-cyan-300">{s.value}</p><p className="mt-1 text-sm font-black uppercase tracking-widest text-cyan-100">{s.label}</p></div>)}</div></div></div></section>;
 }
 
 function Program() {
@@ -240,12 +240,14 @@ function Categories() {
 }
 
 function PastWinners() {
-  return <section id="ganadores" className="bg-gradient-to-br from-[#0B2A4A] via-[#1E4D6B] to-[#2E8B57] py-16 text-white"><div className="mx-auto max-w-7xl px-4 sm:px-6"><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><SectionHeader dark kicker="🏆 Leyendas del mar" title="La historia se escribe en cada captura." text="Grandes pescadores, capturas memorables y momentos que quedan para siempre en la tradición del torneo." /><button onClick={() => goTo(LIVE_SCORING_URL, "click_historico_live")} className="rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 px-6 py-4 font-black text-blue-950 shadow-lg hover:from-amber-300 hover:to-amber-400">📱 Ver resultados 2026</button></div><div className="mt-10 grid gap-5 lg:grid-cols-3">{pastWinners.map((w) => <WinnerCard key={w.year} winner={w} />)}</div><div className="mt-8 rounded-[2rem] border border-white/20 bg-white/10 p-6"><p className="text-sm font-black uppercase tracking-[0.22em] text-cyan-200">📸 Tu lugar en la historia</p><p className="mt-3 text-lg font-semibold leading-8 text-cyan-50">¿Serás el próximo campeón? Inscribe tu embarcación y escribe tu nombre en la historia del torneo más prestigioso del Golfo.</p></div></div></section>;
+  return <section id="ganadores" className="bg-gradient-to-br from-[#0B2A4A] via-[#1E4D6B] to-[#2E8B57] py-16 text-white"><div className="mx-auto max-w-7xl px-4 sm:px-6"><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><SectionHeader dark kicker="🏆 Leyendas del mar" title="La historia se escribe en cada captura." text="Grandes pescadores, capturas memorables y momentos que quedan para siempre en la tradición del torneo." /><button onClick={() => goTo(LIVE_SCORING_URL, "click_historico_live")} className="rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 px-6 py-4 font-black text-blue-950 shadow-lg hover:from-amber-300 hover:to-amber-400">📱 Ver resultados 2026</button></div><div className="mt-10 grid gap-5 lg:grid-cols-3">{pastWinners.map((w) => <WinnerCard key={w.year} winner={w} />)}</div></div></section>;
 }
 
 function WinnerCard({ winner }) {
-  const winnerImages = { "2025": "/ganador2025.jpg", "2024": "/ganador2024.jpg", "2023": "/ganador2023.jpg" };
-  return <div className="overflow-hidden rounded-[2rem] bg-white text-blue-950 shadow-xl"><ArtPanel type={winner.imageType} title={winner.year} subtitle="Foto real del ganador / premio" image={winnerImages[winner.year]} /><div className="p-6"><Chip variant="gold">{winner.category}</Chip><h3 className="mt-4 text-2xl font-black">{winner.team}</h3><p className="mt-2 text-sm font-bold text-slate-700">{winner.metric}</p><div className="mt-4 rounded-2xl bg-cyan-50 p-4"><p className="text-xs font-black uppercase tracking-widest text-cyan-800">Premio</p><p className="mt-1 text-lg font-black">{winner.prize}</p></div></div></div>;
+  const winnerImages = { "2025": "/ganador2023.jpg", "2024": "/ganador2024.jpg", "2023": "/ganador2025.jpg" };
+  return <div className="overflow-hidden rounded-[2rem] bg-white text-blue-950 shadow-xl">
+    <img src={winnerImages[winner.year]} alt={winner.year} className="h-64 w-full object-cover" />
+    <div className="p-6"><Chip variant="gold">{winner.category}</Chip><h3 className="mt-4 text-2xl font-black">{winner.year} · {winner.team}</h3><p className="mt-2 text-sm font-bold text-slate-700">{winner.metric}</p></div></div>;
 }
 
 function Sponsors({ sponsorGroups }) {
@@ -253,15 +255,143 @@ function Sponsors({ sponsorGroups }) {
 }
 
 function Media() {
-  return <section id="galeria" className="mx-auto max-w-7xl px-4 py-16 sm:px-6"><div className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-start"><div><SectionHeader kicker="🎥 Galería" title="Revive la experiencia Mucho Bueno." /><div className="mt-6"><ArtPanel large type="video" title="Reel / highlights" subtitle="Placeholder para video hero del torneo, tomas de drone y momentos clave." image="/Reel.mp4" /></div></div><div className="grid grid-cols-2 gap-4 md:grid-cols-3"><ArtPanel large type="marlin" title="Salida" subtitle="Amanecer en el Club" image="/zarpada.jpg" /><ArtPanel large type="yacht" title="Offshore" subtitle="Aguas profundas" image="/Offshore.jpeg" /><ArtPanel large type="tampico" title="La caza" subtitle="Donde todo sucede" image="/La caza.jpeg" /><ArtPanel type="video" title="Convivencia" subtitle="Espíritu de equipo" image="/convivencia.mp4" /><ArtPanel type="marlin" title="Validación" subtitle="El momento de la verdad" image="/Validacion.jpeg" /><ArtPanel type="yacht" title="Trofeos" subtitle="Los grandes ganadores" image="/Trofeos.jpeg" /></div></div></section>;
+  return (
+    <section id="galeria" className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
+      <div className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
+        <div>
+          <SectionHeader kicker="🎥 Galería" title="Revive la experiencia Mucho Bueno." />
+          <div className="mt-6">
+            <ArtPanel
+              large
+              type="video"
+              title="Reel / highlights"
+              image="/486297086_1050791213743903_3405545384149997235_n.jpg"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+          <ArtPanel
+            large
+            type="marlin"
+            title="Salida"
+            subtitle="Amanecer en el Club"
+            image="/486135015_1050791273743897_636085159929147075_n.jpg"
+          />
+          <ArtPanel
+            large
+            type="yacht"
+            title="Offshore"
+            subtitle="Aguas profundas"
+            image="/485782120_1051280327028325_8707539482327961321_n.jpg"
+          />
+          <ArtPanel
+            large
+            type="tampico"
+            title="La caza"
+            subtitle="Donde todo sucede"
+            image="/486023368_1051122760377415_4523311441776305076_n.jpg"
+          />
+          <ArtPanel
+            type="video"
+            title="Convivencia"
+            subtitle="Espíritu de equipo"
+            image="/493259567_1080790000744024_2062272475066051891_n.jpg"
+          />
+          <ArtPanel
+            type="marlin"
+            title="Validación"
+            subtitle="El momento de la verdad"
+            image="/494751584_1080789800744044_7987653697827813474_n.jpg"
+          />
+          <ArtPanel
+            type="yacht"
+            title="Trofeos"
+            subtitle="Los grandes ganadores"
+            image="/482352856_1040807981408893_4155154715329188717_n.jpg"
+          />
+        </div>
+      </div>
+    </section>
+  );
 }
 
 function Contact({ contactType, setContactType }) {
-  return <section id="contacto" className="bg-white py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6"><SectionHeader center kicker="📬 Contacto" title="Participa o patrocina Mucho Bueno." text="Comunícate directamente con el comité organizador. Estamos listos para confirmar tu participación o resolver tus dudas." /><Card className="mx-auto mt-10 max-w-4xl overflow-hidden"><div className="grid lg:grid-cols-[.8fr_1.2fr]"><div className="bg-gradient-to-br from-[#0B2A4A] to-[#1E4D6B] p-7 text-white"><LogoBadge compact /><h3 className="mt-5 text-3xl font-black">Contacto</h3><p className="mt-3 text-sm font-semibold leading-7 text-cyan-50">Selecciona tu tipo de solicitud y deja tus datos. Te responderemos por WhatsApp lo antes posible.</p><div className="mt-6 space-y-2"><ContactType active={contactType === "participar"} onClick={() => setContactType("participar")}>🚤 Quiero participar</ContactType><ContactType active={contactType === "patrocinar"} onClick={() => setContactType("patrocinar")}>🤝 Quiero patrocinar</ContactType><ContactType active={contactType === "general"} onClick={() => setContactType("general")}>💬 Información general</ContactType></div></div><div className="p-7"><div className="grid gap-4 sm:grid-cols-2"><Input label="Capitán / Responsable" placeholder="Tu nombre" /><Input label="Radio / WhatsApp" placeholder="833..." /><Input label="Correo" placeholder="correo@empresa.com" /><Input label={contactType === "patrocinar" ? "Empresa / marca" : "Embarcación"} placeholder={contactType === "patrocinar" ? "Nombre de empresa" : "Nombre de embarcación"} /><label className="sm:col-span-2"><span className="text-sm font-black text-blue-950">Mensaje</span><textarea className="mt-2 h-32 w-full rounded-2xl border border-cyan-200 p-4 font-semibold outline-none focus:ring-4 focus:ring-cyan-100" placeholder="Cuéntanos tus dudas o requerimientos especiales..." /></label></div><div className="mt-5"><button onClick={() => goTo(contactType === "patrocinar" ? SPONSOR_WHATSAPP : CONTACT_WHATSAPP, `click_contact_${contactType}`)} className="w-full rounded-2xl bg-blue-950 px-6 py-5 font-black text-white shadow-lg hover:bg-blue-900">Enviar por WhatsApp</button></div></div></div></Card></div></section>;
+  return (
+    <section id="contacto" className="bg-white py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <SectionHeader
+          center
+          kicker="📬 Contacto"
+          title="Canales Oficiales del Torneo"
+          text="Mantente en contacto con el comité organizador a través de nuestras redes sociales oficiales."
+        />
+        <Card className="mx-auto mt-10 max-w-4xl overflow-hidden">
+          <div className="grid lg:grid-cols-[.8fr_1.2fr]">
+            <div className="bg-gradient-to-br from-[#0B2A4A] to-[#1E4D6B] p-7 text-white flex flex-col justify-between">
+              <div>
+                <LogoBadge compact />
+                <h3 className="mt-5 text-3xl font-black text-white">CANALES OFICIALES</h3>
+                <p className="mt-3 text-sm font-semibold leading-7 text-cyan-50">
+                  Para dudas, aclaraciones o soporte, síguenos en nuestras plataformas de redes sociales oficiales.
+                </p>
+              </div>
+            </div>
+            <div className="p-7 flex flex-col justify-center items-center gap-6 bg-slate-50 min-h-[300px]">
+              <h4 className="text-xl font-black text-blue-950 text-center">Nuestras Comunidades</h4>
+              <div className="flex flex-col gap-4 w-full max-w-md">
+                <a
+                  href="https://www.facebook.com/tampicomuchobueno"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center gap-3 rounded-2xl bg-[#1877F2] text-white px-6 py-4 font-black shadow-md hover:opacity-90 transition transform hover:-translate-y-0.5 text-center"
+                >
+                  <svg className="h-5 w-5 fill-current flex-shrink-0" viewBox="0 0 24 24">
+                    <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                  </svg>
+                  Facebook Oficial
+                </a>
+                <a
+                  href="https://www.instagram.com/tampicomuchobueno/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F56040] text-white px-6 py-4 font-black shadow-md hover:opacity-90 transition transform hover:-translate-y-0.5 text-center"
+                >
+                  <svg className="h-5 w-5 fill-current flex-shrink-0" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  Instagram Oficial
+                </a>
+                <a
+                  href={LIVE_SCORING_URL}
+                  className="flex items-center justify-center gap-3 rounded-2xl bg-blue-950 text-white px-6 py-4 font-black shadow-md hover:bg-blue-900 transition transform hover:-translate-y-0.5 text-center"
+                >
+                  📱 Plataforma Live Scoring
+                </a>
+              </div>
+              {/* Deactivated contact form to prevent personal WhatsApp spam
+              <div className="hidden">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Input label="Capitán / Responsable" placeholder="Tu nombre" />
+                  <Input label="Radio / WhatsApp" placeholder="833..." />
+                  <Input label="Correo" placeholder="correo@empresa.com" />
+                  <Input label={contactType === "patrocinar" ? "Empresa / marca" : "Embarcación"} placeholder={contactType === "patrocinar" ? "Nombre de empresa" : "Nombre de embarcación"} />
+                  <label className="sm:col-span-2">
+                    <span className="text-sm font-black text-blue-950">Mensaje</span>
+                    <textarea className="mt-2 h-32 w-full rounded-2xl border border-cyan-200 p-4 font-semibold outline-none focus:ring-4 focus:ring-cyan-100" placeholder="Cuéntanos tus dudas..." />
+                  </label>
+                </div>
+                <button onClick={() => goTo(contactType === "patrocinar" ? SPONSOR_WHATSAPP : CONTACT_WHATSAPP, `click_contact_${contactType}`)}>Enviar por WhatsApp</button>
+              </div>
+              */}
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+  );
 }
 function ContactType({ children, active, onClick }) { return <button onClick={onClick} className={`w-full rounded-2xl px-4 py-3 text-left text-sm font-black transition ${active ? "bg-cyan-300 text-blue-950" : "bg-white/10 text-white hover:bg-white/20"}`}>{children}</button>; }
 function Input({ label, placeholder }) { return <label><span className="text-sm font-black text-blue-950">{label}</span><input className="mt-2 w-full rounded-2xl border border-cyan-200 p-4 font-semibold outline-none focus:ring-4 focus:ring-cyan-100" placeholder={placeholder} /></label>; }
 
 function Footer() {
-  return <footer className="bg-gradient-to-r from-[#0B2A4A] to-[#1E4D6B] text-white"><div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_1fr_1fr]"><div className="flex items-center gap-4"><LogoBadge compact /><div><h3 className="text-xl font-black">{BRAND.name}</h3><p className="mt-1 text-sm font-semibold text-cyan-100">{BRAND.edition}</p><p className="mt-1 text-sm font-semibold text-cyan-100">{BRAND.dates}</p></div></div><div><h4 className="font-black">Navegación</h4><div className="mt-3 flex flex-wrap gap-2"><button onClick={() => goTo(LIVE_SCORING_URL, "click_live_scoring_footer")} className="rounded-xl bg-white px-3 py-2 text-xs font-black text-blue-950">📡 📱 Live Scoring</button><a href={INSTAGRAM_URL} className="rounded-xl bg-white/10 px-3 py-2 text-xs font-black text-white">Instagram</a><a href="#contacto" className="rounded-xl bg-white/10 px-3 py-2 text-xs font-black text-white">📻 Contacto</a></div></div><div><h4 className="font-black">Comité técnico</h4><p className="mt-2 text-sm font-semibold text-cyan-100">El público consulta resultados sin contraseña. Jueces y comité organizador acceden al panel administrativo.</p><a href={JUDGE_ACCESS_URL} className="mt-3 inline-flex rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-3 py-2 text-xs font-black text-blue-950 hover:from-amber-300 hover:to-amber-400">⚖️ Acceso jueces</a></div></div></footer>;
+  return <footer className="bg-gradient-to-r from-[#0B2A4A] to-[#1E4D6B] text-white"><div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_1fr_1fr]"><div className="flex items-center gap-4"><LogoBadge compact /><div><h3 className="text-xl font-black">{BRAND.name}</h3><p className="mt-1 text-sm font-semibold text-cyan-100">{BRAND.edition}</p><p className="mt-1 text-sm font-semibold text-cyan-100">{BRAND.dates}</p></div></div><div><h4 className="font-black">Navegación</h4><div className="mt-3 flex flex-wrap gap-2"><button onClick={() => goTo(LIVE_SCORING_URL, "click_live_scoring_footer")} className="rounded-xl bg-white px-3 py-2 text-xs font-black text-blue-950">📡 📱 Live Scoring</button><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2 text-xs font-black text-white hover:bg-white/20"><svg className="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>Instagram</a><a href="https://www.facebook.com/tampicomuchobueno" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2 text-xs font-black text-white hover:bg-white/20"><svg className="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>Facebook</a></div></div><div><h4 className="font-black">Comité técnico</h4><p className="mt-2 text-sm font-semibold text-cyan-100">El público consulta resultados sin contraseña. Jueces y comité organizador acceden al panel administrativo.</p><a href={JUDGE_ACCESS_URL} className="mt-3 inline-flex rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-3 py-2 text-xs font-black text-blue-950 hover:from-amber-300 hover:to-amber-400">⚖️ Acceso jueces</a></div></div></footer>;
 }
