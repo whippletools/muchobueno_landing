@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 // Mucho Bueno Landing · V3 Completa (Actualizada desde v2 con logo de v1)
 // Sitio público/institucional separado del sistema Live Scoring.
@@ -73,6 +73,20 @@ const pastWinners = [
     metric: "Peso total acumulado",
     imageType: "tampico",
   },
+];
+
+const allWinners = [
+  { year: "2025", image: "/2025 Maya-Maya.jpg.jpeg" },
+  { year: "2024", image: "/2024 Quimera.jpg.jpeg" },
+  { year: "2023", image: "/2023 Sherrie Lynn.jpg.jpeg" },
+  { year: "2022", image: "/2022 Smooth.jpg.jpeg" },
+  { year: "2021", image: "/2021 Dinamita.jpg.jpeg" },
+  { year: "2019", image: "/2019 Tremenda.jpg.jpeg" },
+  { year: "2017", image: "/2017 Don Balta.jpg.jpeg" },
+  { year: "2016", image: "/2016 Shitán.jpg.jpeg" },
+  { year: "2015", image: "/2015 Sherrie Lynn.jpg.jpeg" },
+  { year: "2014", image: "/2014 7 Mares.jpg.jpeg" },
+  { year: "2013", image: "/2013 Veneno.jpg.jpeg" },
 ];
 
 function trackEvent(name) {
@@ -240,14 +254,88 @@ function Categories() {
 }
 
 function PastWinners() {
-  return <section id="ganadores" className="bg-gradient-to-br from-[#0B2A4A] via-[#1E4D6B] to-[#2E8B57] py-16 text-white"><div className="mx-auto max-w-7xl px-4 sm:px-6"><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><SectionHeader dark kicker="🏆 Leyendas del mar" title="La historia se escribe en cada captura." text="Grandes pescadores, capturas memorables y momentos que quedan para siempre en la tradición del torneo." /><button onClick={() => goTo(LIVE_SCORING_URL, "click_historico_live")} className="rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 px-6 py-4 font-black text-blue-950 shadow-lg hover:from-amber-300 hover:to-amber-400">📱 Ver resultados 2026</button></div><div className="mt-10 grid gap-5 lg:grid-cols-3">{pastWinners.map((w) => <WinnerCard key={w.year} winner={w} />)}</div></div></section>;
+  return <section id="ganadores" className="bg-gradient-to-br from-[#0B2A4A] via-[#1E4D6B] to-[#2E8B57] py-16 text-white"><div className="mx-auto max-w-7xl px-4 sm:px-6"><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><SectionHeader dark kicker="🏆 Leyendas del mar" title="La historia se escribe en cada captura." text="Grandes pescadores, capturas memorables y momentos que quedan para siempre en la tradición del torneo." /><button onClick={() => goTo(LIVE_SCORING_URL, "click_historico_live")} className="rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 px-6 py-4 font-black text-blue-950 shadow-lg hover:from-amber-300 hover:to-amber-400">📱 Ver resultados 2026</button></div><div className="mt-10"><WinnersCarousel /></div></div></section>;
 }
 
-function WinnerCard({ winner }) {
-  const winnerImages = { "2025": "/ganador2023.jpg", "2024": "/ganador2024.jpg", "2023": "/ganador2025.jpg" };
-  return <div className="overflow-hidden rounded-[2rem] bg-white text-blue-950 shadow-xl">
-    <img src={winnerImages[winner.year]} alt={winner.year} className="h-64 w-full object-cover" />
-    <div className="p-6"><Chip variant="gold">{winner.category}</Chip><h3 className="mt-4 text-2xl font-black">{winner.year} · {winner.team}</h3><p className="mt-2 text-sm font-bold text-slate-700">{winner.metric}</p></div></div>;
+function WinnersCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [slidesPerView, setSlidesPerView] = useState(3);
+  const containerRef = useRef(null);
+  const totalSlides = allWinners.length;
+
+  useEffect(() => {
+    const updateSlidesPerView = () => {
+      const width = window.innerWidth;
+      if (width >= 1024) setSlidesPerView(3);
+      else if (width >= 640) setSlidesPerView(2);
+      else setSlidesPerView(1);
+    };
+    updateSlidesPerView();
+    window.addEventListener("resize", updateSlidesPerView);
+    return () => window.removeEventListener("resize", updateSlidesPerView);
+  }, []);
+
+  const maxIndex = Math.max(0, totalSlides - slidesPerView);
+  const safeIndex = Math.min(currentIndex, maxIndex);
+
+  const goNext = () => setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
+  const goPrev = () => setCurrentIndex((prev) => Math.max(prev - 1, 0));
+
+  return (
+    <div className="relative">
+      <div className="overflow-hidden">
+        <div
+          ref={containerRef}
+          className="flex transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${safeIndex * (100 / slidesPerView)}%)` }}
+        >
+          {allWinners.map((w) => (
+            <div
+              key={w.year}
+              className="flex-shrink-0 px-2"
+              style={{ width: `${100 / slidesPerView}%` }}
+            >
+              <div className="flex h-full flex-col overflow-hidden rounded-[2rem] bg-white text-blue-950 shadow-xl">
+                <div className="flex flex-shrink-0 items-center justify-center p-5">
+                  <h3 className="text-center text-xl font-black sm:text-2xl">Campeón {w.year}</h3>
+                </div>
+                <img
+                  src={w.image}
+                  alt={`Campeón ${w.year}`}
+                  className="h-64 w-full flex-grow object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {safeIndex > 0 && (
+        <button
+          onClick={goPrev}
+          className="absolute left-0 top-1/2 z-10 -translate-y-1/2 -translate-x-2 sm:-translate-x-4 rounded-full bg-white p-2 sm:p-3 shadow-lg ring-1 ring-slate-200 transition hover:scale-105"
+          aria-label="Anterior"
+        >
+          <svg className="h-5 w-5 text-blue-950 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+      )}
+      {safeIndex < maxIndex && (
+        <button
+          onClick={goNext}
+          className="absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-2 sm:translate-x-4 rounded-full bg-white p-2 sm:p-3 shadow-lg ring-1 ring-slate-200 transition hover:scale-105"
+          aria-label="Siguiente"
+        >
+          <svg className="h-5 w-5 text-blue-950 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      )}
+    </div>
+  );
 }
 
 function Sponsors({ sponsorGroups }) {
