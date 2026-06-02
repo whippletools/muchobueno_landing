@@ -132,7 +132,7 @@ function ArtPanel({ type = "marlin", title, subtitle, large = false, image }) {
 
   if (image) {
     const isVideo = image.endsWith(".mp4");
-    return <div className={`relative overflow-hidden rounded-[2rem] shadow-2xl ${large ? "h-[30rem]" : "h-[16rem]"}`}>
+    return <div className={`relative overflow-hidden rounded-[2rem] shadow-2xl ${large ? "h-[16rem] sm:h-[30rem]" : "h-[16rem]"}`}>
       {isVideo
         ? <video src={image} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover" />
         : <img src={image} alt={title} className="absolute inset-0 h-full w-full object-cover" loading="eager" decoding="async" />
@@ -140,14 +140,14 @@ function ArtPanel({ type = "marlin", title, subtitle, large = false, image }) {
       <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 via-blue-950/20 to-transparent" />
       <div className="relative flex h-full flex-col justify-end p-5">
         <div>
-          {title && <h3 className={`${large ? "text-4xl" : "text-2xl"} font-black leading-tight text-white`}>{title}</h3>}
+          {title && <h3 className={`${large ? "text-2xl sm:text-4xl" : "text-2xl"} font-black leading-tight text-white`}>{title}</h3>}
           {subtitle && <p className="mt-2 max-w-md text-sm font-bold leading-6 text-cyan-50">{subtitle}</p>}
         </div>
       </div>
     </div>;
   }
 
-  return <div className={`relative overflow-hidden rounded-[2rem] bg-gradient-to-br ${bg} p-5 text-white shadow-xl ${large ? "min-h-[25rem]" : "min-h-[12rem]"}`}>
+  return <div className={`relative overflow-hidden rounded-[2rem] bg-gradient-to-br ${bg} p-5 text-white shadow-xl ${large ? "min-h-[12rem] sm:min-h-[25rem]" : "min-h-[12rem]"}`}>
     <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "28px 28px" }} />
     <div className="absolute -right-16 -top-16 h-52 w-52 rounded-full bg-white/20 blur-2xl" />
     <div className="absolute -bottom-14 left-0 h-36 w-[120%] rounded-[50%] bg-white/15" />
@@ -155,7 +155,7 @@ function ArtPanel({ type = "marlin", title, subtitle, large = false, image }) {
       <Chip variant="white">{label}</Chip>
       <div>
         <div className="text-7xl sm:text-8xl">{emoji}</div>
-        <h3 className={`${large ? "text-4xl" : "text-2xl"} mt-3 font-black leading-tight`}>{title}</h3>
+        <h3 className={`${large ? "text-2xl sm:text-4xl" : "text-2xl"} mt-3 font-black leading-tight`}>{title}</h3>
         <p className="mt-2 max-w-md text-sm font-bold leading-6 text-cyan-50">{subtitle}</p>
       </div>
     </div>
