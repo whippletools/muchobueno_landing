@@ -339,7 +339,7 @@ function WinnersCarousel() {
 }
 
 function Sponsors({ sponsorGroups }) {
-  return <section id="patrocinadores" className="bg-[#eaf8fb] py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6"><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><SectionHeader kicker="⚓ Flota Patrocinadora" title="Marcas que navegan con nosotros." text="Las mejores marcas del sector náutico y deportivo respaldan la caza del Marlín Azul." /><button onClick={() => goTo(SPONSOR_WHATSAPP, "click_patrocinar_sponsors")} className="rounded-2xl bg-gradient-to-r from-blue-950 to-blue-900 px-6 py-4 font-black text-white shadow-lg hover:from-blue-900 hover:to-blue-800">🤝 Quiero patrocinar</button></div><div className="mt-10"><SponsorCollage /></div></div></section>;
+  return <section id="patrocinadores" className="bg-[#eaf8fb] py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6"><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><SectionHeader kicker="⚓ Flota Patrocinadora" title="Marcas que navegan con nosotros." text="Las mejores marcas del sector náutico y deportivo respaldan la caza del Marlín Azul." />{/* <button onClick={() => goTo(SPONSOR_WHATSAPP, "click_patrocinar_sponsors")} className="rounded-2xl bg-gradient-to-r from-blue-950 to-blue-900 px-6 py-4 font-black text-white shadow-lg hover:from-blue-900 hover:to-blue-800">🤝 Quiero patrocinar</button> */}</div><div className="mt-10"><SponsorCollage /></div></div></section>;
 }
 
 function SponsorCollage() {
