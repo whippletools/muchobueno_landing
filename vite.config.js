@@ -4,7 +4,20 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
+    host: true,
+    allowedHosts: [".trycloudflare.com"],
     port: 3000,
-    open: true
-  }
+    open: true,
+    cors: {
+      origin: "https://hampshire-sand-understood-wallpaper.trycloudflare.com",
+      credentials: true,
+    },
+    proxy: {
+      "/api": {
+        target: "https://hampshire-sand-understood-wallpaper.trycloudflare.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 })
