@@ -339,7 +339,23 @@ function WinnersCarousel() {
 }
 
 function Sponsors({ sponsorGroups }) {
-  return <section id="patrocinadores" className="bg-[#eaf8fb] py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6"><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><SectionHeader kicker="⚓ Flota Patrocinadora" title="Marcas que navegan con nosotros." text="Las mejores marcas del sector náutico y deportivo respaldan la caza del Marlín Azul." /><button onClick={() => goTo(SPONSOR_WHATSAPP, "click_patrocinar_sponsors")} className="rounded-2xl bg-gradient-to-r from-blue-950 to-blue-900 px-6 py-4 font-black text-white shadow-lg hover:from-blue-900 hover:to-blue-800">🤝 Quiero patrocinar</button></div><div className="mt-10 space-y-8"><SponsorGroup title="Patrocinadores principales" items={sponsorGroups.principales} large /><SponsorGroup title="Patrocinadores oficiales" items={sponsorGroups.oficiales} /><SponsorGroup title="Aliados" items={sponsorGroups.aliados} compact /></div></div></section>;
+  return <section id="patrocinadores" className="bg-[#eaf8fb] py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6"><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><SectionHeader kicker="⚓ Flota Patrocinadora" title="Marcas que navegan con nosotros." text="Las mejores marcas del sector náutico y deportivo respaldan la caza del Marlín Azul." /><button onClick={() => goTo(SPONSOR_WHATSAPP, "click_patrocinar_sponsors")} className="rounded-2xl bg-gradient-to-r from-blue-950 to-blue-900 px-6 py-4 font-black text-white shadow-lg hover:from-blue-900 hover:to-blue-800">🤝 Quiero patrocinar</button></div><div className="mt-10"><SponsorCollage /></div></div></section>;
+}
+
+function SponsorCollage() {
+  return (
+    <div className="overflow-hidden rounded-[2rem] bg-white shadow-xl">
+      <div className="p-6 sm:p-10">
+        <img
+          src="/img41.jpg"
+          alt="Patrocinadores Mucho Bueno"
+          className="h-auto w-full object-contain"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+  );
 }
 
 function Media() {
