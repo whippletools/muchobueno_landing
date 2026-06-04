@@ -534,7 +534,8 @@ function Footer() {
             />
           </div>
           <p className="text-xs text-white/50 font-semibold text-center md:text-right">
-            &copy; 2026 {BRAND.name}. Todos los derechos reservados.
+            &copy; 2026 {BRAND.name}. Todos los derechos reservados. <span className="hidden md:inline">|</span> <br className="md:hidden" />
+            Powered by <a href="https://whipple.mx" target="_blank" rel="noreferrer" className="text-cyan-300 hover:text-white transition-colors font-bold">Whipple</a>
           </p>
         </div>
       </div>
