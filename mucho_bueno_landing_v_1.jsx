@@ -524,16 +524,16 @@ function Footer() {
           <a href={JUDGE_ACCESS_URL} className="mt-3 inline-flex rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-3 py-2 text-xs font-black text-blue-950 hover:from-amber-300 hover:to-amber-400">⚖️ Acceso jueces</a>
         </div>
       </div>
-      <div className="border-t border-white/10 py-6 mt-4">
-        <div className="mx-auto max-w-7xl px-4 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="border-t border-white/10 py-3 mt-4">
+        <div className="mx-auto max-w-7xl px-4 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex-shrink-0">
             <img 
               src="/Logo Whipple.png" 
               alt="Whipple Tech Partner" 
-              className="h-10 object-contain opacity-90 hover:opacity-100 transition-opacity" 
+              className="h-8 md:h-10 object-contain opacity-90 hover:opacity-100 transition-opacity" 
             />
           </div>
-          <p className="text-xs text-white/50 font-semibold text-center md:text-right">
+          <p className="text-xs text-white/50 font-semibold text-center md:text-right mt-2 md:mt-0">
             &copy; 2026 {BRAND.name}. Todos los derechos reservados. <span className="hidden md:inline">|</span> <br className="md:hidden" />
             Powered by <a href="https://whipple.mx" target="_blank" rel="noreferrer" className="text-cyan-300 hover:text-white transition-colors font-bold">Whipple</a>
           </p>
