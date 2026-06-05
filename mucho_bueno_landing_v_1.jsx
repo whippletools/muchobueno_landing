@@ -345,13 +345,18 @@ function Sponsors({ sponsorGroups }) {
 function SponsorCollage() {
   return (
     <div className="overflow-hidden rounded-[2rem] bg-white shadow-xl">
-      <div className="p-6 sm:p-10">
+      <div className="p-6 sm:p-10 flex flex-col items-center gap-0">
         <img
           src="/img41.jpg"
           alt="Patrocinadores Mucho Bueno"
           className="h-auto w-full object-contain"
           loading="lazy"
           decoding="async"
+        />
+        <img 
+          src="/Logo Whipple.png" 
+          alt="Whipple Tech Partner" 
+          className="h-24 md:h-32 object-contain opacity-90 hover:opacity-100 transition-opacity" 
         />
       </div>
     </div>
@@ -527,11 +532,13 @@ function Footer() {
       <div className="border-t border-white/10 py-3 mt-4">
         <div className="mx-auto max-w-7xl px-4 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex-shrink-0">
-            <img 
-              src="/Logo Whipple.png" 
-              alt="Whipple Tech Partner" 
-              className="h-8 md:h-10 object-contain opacity-90 hover:opacity-100 transition-opacity" 
-            />
+            <a href="https://whipple.mx/" target="_blank" rel="noreferrer" className="block hover:scale-[1.02] transition-transform duration-200">
+              <img 
+                src="/Logo Whipple_v2.png" 
+                alt="Whipple Tech Partner" 
+                className="h-8 md:h-10 object-contain opacity-90 hover:opacity-100 transition-opacity rounded-xl" 
+              />
+            </a>
           </div>
           <p className="text-xs text-white/50 font-semibold text-center md:text-right mt-2 md:mt-0">
             &copy; 2026 {BRAND.name}. Todos los derechos reservados. <span className="hidden md:inline">|</span> <br className="md:hidden" />
